@@ -4,13 +4,8 @@ import profileService from '../../services/ProfileService';
 const SAVE_PROFILE_CALSS_NAME = 'save-profile';
 
 export default class Profile extends BaseComponent {
-    private element: HTMLElement;
-
-    constructor(rootContainer: HTMLElement) {
+    constructor() {
         super();
-
-        this.element = this.compileTemplate();
-        rootContainer.appendChild(this.element);
 
         this.element
             .getElementsByClassName(SAVE_PROFILE_CALSS_NAME)[0]

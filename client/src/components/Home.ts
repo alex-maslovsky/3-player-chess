@@ -1,10 +1,8 @@
 import BaseComponent from './BaseComponent';
 
 export default class Home extends BaseComponent {
-    constructor(rootContainer: HTMLElement) {
+    constructor() {
         super();
-
-        rootContainer.appendChild(this.compileTemplate())
     }
 
     protected getTemplate(): string {

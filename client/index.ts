@@ -27,14 +27,14 @@ router.on('/', () => {
     const root = getRootContainer();
 
     root.innerHTML = '';
-    new Home(root);
+    root.appendChild(new Home().element);
 });
 
 router.on('/profile', () => {
     const root = getRootContainer();
 
     root.innerHTML = '';
-    new Profile(root);
+    root.appendChild(new Profile().element);
 });
 
 router.resolve();
