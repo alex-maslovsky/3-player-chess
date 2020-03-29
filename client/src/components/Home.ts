@@ -1,13 +1,13 @@
 import BaseComponent from './BaseComponent';
 
 export default class Home extends BaseComponent {
-    constructor(rootContiner: HTMLElement) {
+    constructor(rootContainer: HTMLElement) {
         super();
 
-        rootContiner.appendChild(this.compileTemplate())
+        rootContainer.appendChild(this.compileTemplate())
     }
 
-    protected getTemplate() {
+    protected getTemplate(): string {
         return `
             <h1>Hello World</h1>
         `;

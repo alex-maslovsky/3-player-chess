@@ -1,19 +1,37 @@
 import Novigo from 'navigo';
 
-export type Params = {[k in string]: any};
+export type Params = {[k in string]: string};
 
 export default class Router {
     private router: Novigo;
 
     constructor() {
-        this.router = new Novigo(null, true, '#');
+        const root: string = null;
+        const useHash = true;
+        const hash = '#';
+
+        this.router = new Novigo(root, useHash, hash);
     }
 
-    on(route: string, handler: (params: Params, query: string) => void): void {
+    public on(route: string, handler: (params: Params, query: string) => void): void {
         this.router.on(route, handler);
     }
 
-    resolve(): void {
+    public navigate(route: string): void {
+        this.router.navigate(route);
+    }
+
+    public resolve(): void {
         this.router.resolve();
+    }
+
+    public hookBefore(callback: (done: (suppress?: boolean) => void, params?: Params) => void): void{
+        this.router.hooks({
+            before: callback,
+        });
+    }
+
+    public getCurrentRoute(): string {
+        return window.location.hash.slice(1);
     }
 }
