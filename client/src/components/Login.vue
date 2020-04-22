@@ -1,0 +1,48 @@
+<template>
+    <div class="md-layout">
+        <div class="md-layout-item"></div>
+        <div class="md-layout-item md-layout md-size-67">
+            <div class="md-layout-item">
+                <md-field :class="validationClass">
+                    <label>Username</label>
+                    <md-input v-model="username"></md-input>
+                </md-field>
+            </div>
+            <div class="md-layout-item md-size-33" style="display: flex; align-items: center;">
+                <md-button class="md-raised md-primary" @click="saveUsername()" style="width: 100%;">Save</md-button>
+            </div>
+        </div>
+        <div class="md-layout-item"></div>
+        <md-snackbar md-position="center" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
+            <span>Username is required!</span>
+        </md-snackbar>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data: () => {
+    return {
+        username: localStorage.getItem('username'),
+        showSnackbar: false
+    };
+  },
+  methods: {
+    saveUsername() {
+        if (this.username) {
+            localStorage.setItem('username', this.username);
+        } else {
+            this.showSnackbar = true;
+        }
+    }
+  },
+  computed: {
+    validationClass() {
+        return {
+            'md-invalid': !this.username
+        }
+    }
+  }
+}
+</script>
