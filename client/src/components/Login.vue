@@ -20,29 +20,37 @@
 </template>
 
 <script>
+import { getUsername, setUsername } from '../services/local-storage-service';
+import router from '../router';
+import Pages from '../constants/pages';
+
 export default {
   name: 'Login',
   data: () => {
     return {
-        username: localStorage.getItem('username'),
+        username: getUsername(),
         showSnackbar: false
     };
   },
   methods: {
     saveUsername() {
         if (this.username) {
-            localStorage.setItem('username', this.username);
+            setUsername(this.username);
+            this.redirect();
         } else {
             this.showSnackbar = true;
         }
+    },
+    redirect() {
+        router.push(router.currentRoute.query.backUrl || { name: Pages.Home });
     }
   },
   computed: {
     validationClass() {
         return {
             'md-invalid': !this.username
-        }
+        };
     }
   }
-}
+};
 </script>

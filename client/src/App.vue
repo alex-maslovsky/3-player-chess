@@ -7,9 +7,9 @@
 <script>
 
 import './app.scss';
-import './services/socket-service'
+import './services/socket-service';
 
 export default {
   name: 'App'
-}
+};
 </script>
