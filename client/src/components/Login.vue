@@ -14,7 +14,8 @@
         </div>
         <div class="md-layout-item"></div>
         <md-snackbar md-position="center" :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
-            <span>Username is required!</span>
+            <span v-if="username">Username already exists!</span>
+            <span v-else>Username is required!</span>
         </md-snackbar>
     </div>
 </template>
@@ -23,6 +24,7 @@
 import { getUsername, setUsername } from '../services/local-storage-service';
 import router from '../router';
 import Pages from '../constants/pages';
+import { login } from '../services/user-socket-service';
 
 export default {
   name: 'Login',
@@ -33,8 +35,8 @@ export default {
     };
   },
   methods: {
-    saveUsername() {
-        if (this.username) {
+    async saveUsername() {
+        if (this.username && await login(this.username)) {
             setUsername(this.username);
             this.redirect();
         } else {
