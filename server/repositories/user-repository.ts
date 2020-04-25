@@ -15,11 +15,13 @@ export default class UserRepository extends BaseRepository<IUserCollection> {
         return this.collection.findOne({ username });
     }
 
-    public deleteBySocketId(socketId: string): void {
+    public deleteBySocketId(socketId: string): IUserCollection | null {
         const doc = this.collection.findOne({ socketId });
 
         if (doc) {
             this.collection.remove(doc);
         }
+
+        return doc;
     }
 }

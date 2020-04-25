@@ -1,4 +1,5 @@
 export default {
     Home: 'Home',
-    Login: 'Login'
+    Login: 'Login',
+    Lobby: 'Lobby',
 };

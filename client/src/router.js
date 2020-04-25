@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Pages from './constants/pages';
-import Home from './components/Home';
+import Home from './components/home/Home';
 import Login from './components/Login';
+import Lobby from './components/lobby/Lobby';
 import { getUsername } from './services/local-storage-service';
 
 Vue.use(VueRouter);
@@ -10,7 +11,8 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   routes: [
     { path: '/', component: Home, name: Pages.Home },
-    { path: '/login', component: Login, name: Pages.Login }
+    { path: '/login', component: Login, name: Pages.Login },
+    { path: '/lobby', component: Lobby, name: Pages.Lobby }
   ]
 });
 

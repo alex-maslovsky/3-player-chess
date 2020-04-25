@@ -7,6 +7,7 @@ export const login = (username) => {
     return new Promise((resolve) => {
         socket.on(SocketEvents.Login, ({ succeeded }) => {
             resolve(succeeded);
+            socket.off(SocketEvents.Login);
         });
     });
 };
