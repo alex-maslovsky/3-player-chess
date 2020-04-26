@@ -1,27 +1,36 @@
 <template>
     <div>
-        <PlayerCard :username="host"/>
-        <PlayerCard :username="users[0]"/>
-        <PlayerCard :username="users[1]"/>
+        <md-progress-bar v-if="!lobby" md-mode="query"></md-progress-bar>
+        <div v-else>
+            <PlayerCard :username="lobby.members[0]"/>
+            <PlayerCard :username="lobby.members[1]"/>
+            <PlayerCard :username="lobby.members[2]"/>
+        </div>
     </div>
 </template>
 
 <script>
 import PlayerCard from './PlayerCard';
 import { getUsername } from '../../services/local-storage-service';
-import { createLobby } from '../../services/lobby-socket-service';
+import { createLobby, joinToLobby, onLobbyUpdates } from '../../services/lobby-socket-service';
+import router from '../../router';
 
 export default {
     name: 'Lobby',
     components: { PlayerCard },
     data: () => {
         return {
-            host: getUsername(),
-            users: [],
+            lobby: null,
         };
     },
-    created() {
-        createLobby(this.host);
+    async created() {
+        const { hostUsername } = router.currentRoute.params;
+
+        this.lobby = hostUsername
+            ? await joinToLobby(hostUsername, getUsername())
+            : await createLobby(getUsername());
+
+        onLobbyUpdates(hostUsername || getUsername(), (lobby) => this.lobby = lobby);
     }
 };
 </script>

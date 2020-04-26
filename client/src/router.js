@@ -12,7 +12,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Home, name: Pages.Home },
     { path: '/login', component: Login, name: Pages.Login },
-    { path: '/lobby', component: Lobby, name: Pages.Lobby }
+    { path: '/lobby/:hostUsername?', component: Lobby, name: Pages.Lobby }
   ]
 });
 

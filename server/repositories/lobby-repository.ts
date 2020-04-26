@@ -3,6 +3,7 @@ import DatabaseCollections from '../constants/database-collections';
 
 export interface ILobbyCollection extends IBaseCollection {
     hostUsername: string;
+    members: string[];
 }
 
 export default class LobbyRepository extends BaseRepository<ILobbyCollection> {
@@ -22,5 +23,9 @@ export default class LobbyRepository extends BaseRepository<ILobbyCollection> {
 
     public getLobbyHostUsernames(): string[] {
         return this.getAll().map((lobby) => lobby.hostUsername);
+    }
+
+    public findLobbyByHostUsername(hostUsername: string): ILobbyCollection | null {
+        return this.collection.findOne({ hostUsername });
     }
 }
