@@ -2,7 +2,7 @@ import socket from './socket-service';
 import SocketEvents from '../constants/socket-events';
 
 export const createLobby = (hostUsername) => {
-    socket.emit(SocketEvents.CreateLobby, hostUsername);
+    socket.authEmit(SocketEvents.CreateLobby, { hostUsername });
 
     return new Promise((resolve) => {
         socket.on(SocketEvents.CreateLobby, (lobby) => {
@@ -13,7 +13,7 @@ export const createLobby = (hostUsername) => {
 };
 
 export const onLobbyListUpdates = (onUpdates) => {
-    socket.emit(SocketEvents.GetAllLobbies, null);
+    socket.authEmit(SocketEvents.GetAllLobbies, null);
     socket.on(SocketEvents.GetAllLobbies, (lobbyList) => {
         onUpdates(lobbyList);
         socket.off(SocketEvents.GetAllLobbies);
@@ -23,7 +23,7 @@ export const onLobbyListUpdates = (onUpdates) => {
 };
 
 export const joinToLobby = (hostUsername, username) => {
-    socket.emit(SocketEvents.JoinToLobby, hostUsername, username);
+    socket.authEmit(SocketEvents.JoinToLobby, { hostUsername, username });
 
     return new Promise((resolve) => {
         socket.on(SocketEvents.JoinToLobby, (lobby) => {
@@ -39,4 +39,20 @@ export const onLobbyUpdates = (hostUsername, onUpdates) => {
             onUpdates(lobby);
         }
     });
+};
+
+export const onLobbyClosed = (hostUsername, onClosed) => {
+    socket.on(SocketEvents.OnLobbyClosed, (lobby) => {
+        if (lobby.hostUsername === hostUsername) {
+            onClosed(lobby);
+        }
+    });
+};
+
+export const leave = () => {
+    socket.authEmit(SocketEvents.LeaveLobby);
+};
+
+export const close = () => {
+    socket.authEmit(SocketEvents.CloseLobby);
 };

@@ -1,8 +1,8 @@
-import BaseRepository, { IBaseCollection } from './base-repository';
+import BaseRepository, { IBaseDocument } from './base-repository';
 import DatabaseCollections from '../constants/database-collections';
 
-export interface IUserCollection extends IBaseCollection {
-    socketId: string;
+export interface IUserCollection extends IBaseDocument {
+    socketIds: string[];
     username: string;
 }
 
@@ -15,13 +15,7 @@ export default class UserRepository extends BaseRepository<IUserCollection> {
         return this.collection.findOne({ username });
     }
 
-    public deleteBySocketId(socketId: string): IUserCollection | null {
-        const doc = this.collection.findOne({ socketId });
-
-        if (doc) {
-            this.collection.remove(doc);
-        }
-
-        return doc;
+    public findBySocketId(socketId: string): IUserCollection | null {
+        return this.collection.findOne({ socketIds: { $contains: socketId } });
     }
 }

@@ -1,9 +1,12 @@
-import BaseRepository, { IBaseCollection } from './base-repository';
+import BaseRepository, { IBaseDocument } from './base-repository';
 import DatabaseCollections from '../constants/database-collections';
 
-export interface ILobbyCollection extends IBaseCollection {
+export interface ILobbyCollection extends IBaseDocument {
     hostUsername: string;
-    members: string[];
+    members: {
+        socketId: string;
+        username: string;
+    }[];
 }
 
 export default class LobbyRepository extends BaseRepository<ILobbyCollection> {
@@ -27,5 +30,11 @@ export default class LobbyRepository extends BaseRepository<ILobbyCollection> {
 
     public findLobbyByHostUsername(hostUsername: string): ILobbyCollection | null {
         return this.collection.findOne({ hostUsername });
+    }
+
+    public findBySocketId(socketId: string): ILobbyCollection | null {
+        return this.collection.where((lobby) => {
+            return !!lobby.members.find((member) => member.socketId === socketId);
+        })[0] || null;
     }
 }

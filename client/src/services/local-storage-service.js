@@ -1,5 +1,7 @@
-const USERNAME_KEY = 'username';
+const TOKEN_KEY = 'token';
 
-export const getUsername = () => localStorage.getItem(USERNAME_KEY);
+export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-export const setUsername = (username) => localStorage.setItem(USERNAME_KEY, username);
+export const deleteToken = () => localStorage.removeItem(TOKEN_KEY);
+
+export const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);

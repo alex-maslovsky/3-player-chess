@@ -21,27 +21,36 @@
 </template>
 
 <script>
-import { getUsername, setUsername } from '../services/local-storage-service';
+import { setToken } from '../services/local-storage-service';
 import router from '../router';
 import Pages from '../constants/pages';
 import { login } from '../services/user-socket-service';
+import userStrore from '../stores/user-store';
 
 export default {
   name: 'Login',
   data: () => {
     return {
-        username: getUsername(),
+        username: userStrore.username,
         showSnackbar: false
     };
   },
   methods: {
     async saveUsername() {
-        if (this.username && await login(this.username)) {
-            setUsername(this.username);
-            this.redirect();
-        } else {
-            this.showSnackbar = true;
+
+        if (this.username) {
+            const { token, username } = await login(this.username);
+
+            if (token) {
+                setToken(token);
+                userStrore.username = username;
+                this.redirect();
+
+                return;
+            }
         }
+
+        this.showSnackbar = true;
     },
     redirect() {
         router.push(router.currentRoute.query.backUrl || { name: Pages.Home });

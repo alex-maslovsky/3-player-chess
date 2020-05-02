@@ -1,3 +1,4 @@
 {
-    "name": "chess.db"
+    "name": "chess.db",
+    "autosaveInterval": 10000
 }

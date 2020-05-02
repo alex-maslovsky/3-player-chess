@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "hone": "^1.1.0",
     "socket.io-client": "^2.3.0",
     "vue": "^2.6.11",
     "vue-material": "^1.0.0-beta-12",

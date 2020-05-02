@@ -1,34 +1,34 @@
 import database from './index';
 import DatabaseCollections from '../constants/database-collections';
 
-export interface IBaseCollection {
+export interface IBaseDocument {
     id: number;
 }
 
-export default class BaseRepository<TCollection extends IBaseCollection> {
+export default class BaseRepository<TDocument extends IBaseDocument> {
     protected database: Loki = database;
-    protected collection: Collection<TCollection>;
+    protected collection: Collection<TDocument>;
 
     constructor(databaseCollection: DatabaseCollections) {
         this.collection = this.createOrGetCollection(databaseCollection);
     }
 
-    public insert(doc: Omit<TCollection, 'id'>): TCollection {
+    public insert(doc: Omit<TDocument, 'id'>): TDocument {
         return this.collection.insert({
             id: this.collection.maxId + 1,
             ...doc
-        } as TCollection);
+        } as TDocument);
     }
 
-    public update(collection: TCollection): TCollection {
-        return this.collection.update(collection);
+    public update(doc: TDocument): TDocument {
+        return this.collection.update(doc);
     }
 
-    public findOneById(id: number): TCollection | null {
-        return this.collection.findOne({ id } as TCollection);
+    public findOneById(id: number): TDocument | null {
+        return this.collection.findOne({ id } as TDocument);
     }
 
-    public getAll(): TCollection[] {
+    public getAll(): TDocument[] {
         return this.collection.find();
     }
 
@@ -40,7 +40,7 @@ export default class BaseRepository<TCollection extends IBaseCollection> {
         }
     }
 
-    private createOrGetCollection(databaseCollection: DatabaseCollections): Collection<TCollection> {
+    private createOrGetCollection(databaseCollection: DatabaseCollections): Collection<TDocument> {
         const collectionName = DatabaseCollections[databaseCollection];
         return this.database.getCollection(collectionName) || this.database.addCollection(collectionName);
     }

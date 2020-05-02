@@ -2,15 +2,15 @@ module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
     plugins: [
-      '@typescript-eslint',
+        '@typescript-eslint',
     ],
     extends: [
-      'eslint:recommended',
-      'plugin:@typescript-eslint/eslint-recommended',
-      'plugin:@typescript-eslint/recommended',
+        'eslint:recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
     ],
     rules: {
-      "@typescript-eslint/interface-name-prefix": ['error', { "prefixWithI": "always" }]
-    }
-  };
-  
+        '@typescript-eslint/interface-name-prefix': ['error', { 'prefixWithI': 'always' }],
+        '@typescript-eslint/ban-types': 'off',
+    },
+};
