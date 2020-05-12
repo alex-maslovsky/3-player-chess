@@ -3,7 +3,7 @@ import databaseConfig from '../config/database.json';
 
 
 export default new loki(databaseConfig.name, {
-    autoload: true,
-    autosave: true,
-    autosaveInterval: databaseConfig.autosaveInterval,
+    // autoload: true,
+    // autosave: true,
+    // autosaveInterval: databaseConfig.autosaveInterval,
 });

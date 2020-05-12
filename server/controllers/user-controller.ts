@@ -27,7 +27,7 @@ export default (socket: Socket): void => {
         let token: string = null;
 
         if (!user) {
-            user = userRepository.insert({ socketIds: [socket.id], username: params.username });
+            user = userRepository.insert({ socketIds: [socket.id], username: params.username, lastRequestAt: new Date() });
             token = jwtService.generate({ username: params.username });
         }
 
